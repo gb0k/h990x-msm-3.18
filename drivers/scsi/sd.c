@@ -1608,9 +1608,12 @@ static const struct block_device_operations sd_fops = {
 #ifdef CONFIG_COMPAT
 	.compat_ioctl		= sd_compat_ioctl,
 #endif
+<<<<<<< HEAD
 #ifdef CONFIG_MACH_LGE
 	.check_events           = sd_check_events,
 #endif
+=======
+>>>>>>> be9622b1de5... Fix various issues preventing compile
 	.revalidate_disk	= sd_revalidate_disk,
 	.unlock_native_capacity	= sd_unlock_native_capacity,
 };
@@ -2982,11 +2985,7 @@ static int sd_media_scan_thread(void *__sdkp)
 			(sdkp->thread_remove && sdkp->async_end), 3*HZ);
 		if (sdkp->thread_remove && sdkp->async_end)
 			break;
-#ifdef CONFIG_MACH_LGE
-		ret = sd_check_events(sdkp->disk, 0);
-#else
 		ret = 0;
-#endif
 
 		if (sdkp->prv_media_present
 				!= sdkp->media_present) {
