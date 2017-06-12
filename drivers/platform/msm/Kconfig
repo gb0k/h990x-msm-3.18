@@ -305,4 +305,29 @@ config LGE_QPNP_HAPTIC_OV_RB
 	  LGE implements Over Drive and Reverse Brake voltage on Direct mode.
 
 	default n
+
+config DIRTYSANTA_FIXUP
+	boolean "Do fixups for problems caused by DirtySanta bootloader"
+	help
+	  Workaround problems cause by the unlocked LGE V20 "DirtySanta"
+	  bootloader.
+	default n
+
+config DIRTYSANTA_FIXUP_DEVICENAME
+	string "Device name to use for VENDOR0 smem area"
+	depends on DIRTYSANTA_FIXUP
+	help
+	  This string is used to modify the VENDOR0 structure of the smem area.
+	  This identifies the device name, and therefore what type of modem
+	  chip is expected to be present on the device.  Known values include
+	  "LG-H990", "LG-H990ds", and "LG-H990N".
+
+config DIRTYSANTA_FIXUP_SIMCOUNT
+	int "Indicate SIM count for VENDOR0 smem area"
+	depends on DIRTYSANTA_FIXUP
+	help
+	  This value is used to modify the VENDOR0 structure of the smem area.
+	  This specifies how many SIM slots should be present on the modem of
+	  the device.  Generally 1 or 2.
+
 endmenu
