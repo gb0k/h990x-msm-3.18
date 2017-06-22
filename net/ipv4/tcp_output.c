@@ -1379,7 +1379,7 @@ int tcp_fragment(struct sock *sk, struct sk_buff *skb, u32 len,
 #ifdef CONFIG_LGP_DATA_TCPIP_MPTCP
 void __pskb_trim_head(struct sk_buff *skb, int len)
 #else
-static void __pskb_trim_head(struct sk_buff *skb, int len)
+static int __pskb_trim_head(struct sk_buff *skb, int len)
 #endif
 {
 	struct skb_shared_info *shinfo;
@@ -1390,7 +1390,7 @@ static void __pskb_trim_head(struct sk_buff *skb, int len)
 		__skb_pull(skb, eat);
 		len -= eat;
 		if (!len)
-			return;
+			return 0;
 	}
 	eat = len;
 	k = 0;
