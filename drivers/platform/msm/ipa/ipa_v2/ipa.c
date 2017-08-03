@@ -40,9 +40,6 @@
 #define CREATE_TRACE_POINTS
 #include "ipa_trace.h"
 
-#include "../dirtysanta_fixup.h"
-
-
 #define IPA_SUMMING_THRESHOLD (0x10)
 #define IPA_PIPE_MEM_START_OFST (0x0)
 #define IPA_PIPE_MEM_SIZE (0x0)
@@ -3827,8 +3824,6 @@ static int ipa_init(const struct ipa_plat_drv_res *resource_p,
 	struct ipa_active_client_logging_info log_info;
 
 	IPADBG("IPA Driver initialization started\n");
-
-	DIRTYSANTA_FIXUP_MSM_MODEM();
 
 	/*
 	 * since structure alignment is implementation dependent, add test to
