@@ -35,8 +35,6 @@
 #include <linux/ipa.h>
 #include <uapi/linux/net_map.h>
 
-#include "../dirtysanta_fixup.h"
-
 #include "ipa_trace.h"
 
 #define WWAN_METADATA_SHFT 24
@@ -2280,9 +2278,6 @@ static int ssr_notifier_cb(struct notifier_block *this,
 			return NOTIFY_DONE;
 		}
 		if (SUBSYS_BEFORE_POWERUP == code) {
-
-			DIRTYSANTA_FIXUP_MSM_MODEM();
-
 			pr_info("IPA received MPSS BEFORE_POWERUP\n");
 			if (atomic_read(&is_ssr))
 				/* clean up cached QMI msg/handlers */

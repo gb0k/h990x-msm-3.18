@@ -18,8 +18,6 @@
 #include <linux/err.h>
 #include <soc/qcom/smem.h>
 
-#include "dirtysanta_fixup.h"
-
 
 #define LG_MODEL_NAME_SIZE 22
 
@@ -38,13 +36,13 @@ struct lge_smem_vendor0 {
 };
 
 
-static char last[32]="";
+static char last[32] __initdata="";
 
-static char dev_name[LG_MODEL_NAME_SIZE]=CONFIG_DIRTYSANTA_FIXUP_DEVICENAME;
-static char sim_num=CONFIG_DIRTYSANTA_FIXUP_SIMCOUNT;
+static char dev_name[LG_MODEL_NAME_SIZE] __initdata=CONFIG_DIRTYSANTA_FIXUP_DEVICENAME;
+static char sim_num __initdata=CONFIG_DIRTYSANTA_FIXUP_SIMCOUNT;
 
 
-bool dirtysanta_fixup_loadcfg(void)
+static int __init dirtysanta_fixup_loadcfg(void)
 {
 	const char MODELNAMEEQ[]="model.name=";
 	const char SIMNUMEQ[]="lge.sim_num=";
@@ -55,7 +53,7 @@ bool dirtysanta_fixup_loadcfg(void)
 	if(!dev_name[0]) {
 		if(!(_dev_name=strstr(saved_command_line, MODELNAMEEQ))) {
 			pr_err("DirtySanta: \"%s\" not passed on kernel command-line\n", MODELNAMEEQ);
-			return 0;
+			return -EINVAL;
 		}
 		_dev_name+=strlen(MODELNAMEEQ);
 		dev_name_len=strchrnul(_dev_name, ' ')-_dev_name;
@@ -72,7 +70,7 @@ bool dirtysanta_fixup_loadcfg(void)
 	if(!sim_num) {
 		if(!(_sim_num=strstr(saved_command_line, SIMNUMEQ))) {
 			pr_err("DirtySanta: \"%s\" not passed on kernel command-line\n", SIMNUMEQ);
-			return 0;
+			return -EINVAL;
 		}
 		sim_num=_sim_num[strlen(SIMNUMEQ)]-'0';
 
@@ -83,12 +81,11 @@ bool dirtysanta_fixup_loadcfg(void)
 	pr_info("DirtySanta: values: \"%s%s\" \"%s%d\"\n", MODELNAMEEQ,
 dev_name, SIMNUMEQ, sim_num);
 
-	return 1;
+	return 0;
 }
-EXPORT_SYMBOL(dirtysanta_fixup_loadcfg);
 
 
-void dirtysanta_fixup_msm_modem(const char *caller)
+static int __init dirtysanta_fixup_msm_modem(void)
 {
 	struct lge_smem_vendor0 *ptr;
 
@@ -96,23 +93,26 @@ void dirtysanta_fixup_msm_modem(const char *caller)
 
 	unsigned size;
 
+	const char caller[]="dirtysanta_early_fixup";
+
 	if(IS_ERR_OR_NULL(ptr=smem_get_entry(SMEM_ID_VENDOR0, &size, 0, SMEM_ANY_HOST_FLAG))) {
 		pr_info("DirtySanta: Qualcomm smem not initialized as of \"%s()\"\n", caller);
-		return;
+		return -EFAULT;
 	}
 
 	if(size<sizeof(struct lge_smem_vendor0)) {
 		pr_err("DirtySanta: Memory area returned by smem_get_entry() too small, when called by \"%s()\"\n", caller);
-		return;
+		return -ENOMEM;
 	}
 
 	if(!sim_num||!dev_name[0]) {
-		if(!dirtysanta_fixup_loadcfg()) return;
+		int ret;
+		if((ret=dirtysanta_fixup_loadcfg())) return ret;
 	}
 
 	if(!strcmp(ptr->lg_model_name, dev_name)&&ptr->sim_num==sim_num) {
 		pr_info("DirtySanta: Previous overwrite of VENDOR0 (\"%s()\") still effective.\n", last);
-		return;
+		return 0;
 	}
 
 	if(last[0]) msg=KERN_INFO "DirtySanta: Needing to overwrite VENDOR0 a second time from \"%s()\" (last was \"%s()\")\n";
@@ -124,6 +124,11 @@ void dirtysanta_fixup_msm_modem(const char *caller)
 
 	strcpy(ptr->lg_model_name, dev_name);
 	ptr->sim_num=sim_num;
+
+	return 0;
 }
-EXPORT_SYMBOL(dirtysanta_fixup_msm_modem);
+
+/* command-line is loaded at core_initcall() **
+** smem handler is initialized at arch_initcall() */
+subsys_initcall(dirtysanta_fixup_msm_modem);
 
