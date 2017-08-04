@@ -15,6 +15,10 @@
 #define _DIRTYSANTA_FIXUP_H_
 #ifdef CONFIG_DIRTYSANTA_FIXUP
 
+/* used for loading from command-line, likely to be __init and void in future */
+bool dirtysanta_fixup_loadcfg(void);
+
+/* overwrites the Qualcomm "smem" area, fixing the modem binary driver */
 void dirtysanta_fixup_msm_modem(const char *calling_function);
 
 #define DIRTYSANTA_FIXUP_MSM_MODEM() dirtysanta_fixup_msm_modem(__func__)
