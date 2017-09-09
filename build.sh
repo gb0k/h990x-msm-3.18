@@ -1,7 +1,7 @@
 export KBUILD_BUILD_USER=Dixon
 export KBUILD_BUILD_HOST=ArchLinux
 export ARCH=arm64
-export CROSS_COMPILE=/home/dixon/toolchains/aarch64-linux-android-7.x/bin/aarch64-linux-android-
+export CROSS_COMPILE=/home/dixon/toolchains/gcc-linaro-7.2.1-2017.11-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-
 
 DIR=$(pwd)
 BUILD="$DIR/build"
