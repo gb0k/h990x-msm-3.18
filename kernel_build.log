@@ -1,0 +1,20 @@
+scripts/kconfig/conf --silentoldconfig Kconfig
+drivers/soc/qcom/Kconfig:368:warning: choice value used outside its choice group
+drivers/soc/qcom/Kconfig:373:warning: choice value used outside its choice group
+warning: (LGE_USB_HOST_SUPPORT_LIST_INPUT) selects MOUSE_APPLETOUCH which has unmet direct dependencies (!UML && INPUT && INPUT_MOUSE && USB_ARCH_HAS_HCD)
+warning: (LGE_USB_HOST_SUPPORT_LIST_INPUT) selects MOUSE_BCM5974 which has unmet direct dependencies (!UML && INPUT && INPUT_MOUSE && USB_ARCH_HAS_HCD)
+warning: (LGE_USB_HOST_SUPPORT_LIST_INPUT) selects MOUSE_SYNAPTICS_USB which has unmet direct dependencies (!UML && INPUT && INPUT_MOUSE && USB_ARCH_HAS_HCD)
+warning: (LGE_USB_HOST_SUPPORT_LIST_INPUT) selects MOUSE_APPLETOUCH which has unmet direct dependencies (!UML && INPUT && INPUT_MOUSE && USB_ARCH_HAS_HCD)
+warning: (LGE_USB_HOST_SUPPORT_LIST_INPUT) selects MOUSE_BCM5974 which has unmet direct dependencies (!UML && INPUT && INPUT_MOUSE && USB_ARCH_HAS_HCD)
+warning: (LGE_USB_HOST_SUPPORT_LIST_INPUT) selects MOUSE_SYNAPTICS_USB which has unmet direct dependencies (!UML && INPUT && INPUT_MOUSE && USB_ARCH_HAS_HCD)
+  CHK     include/config/kernel.release
+  CHK     include/generated/uapi/linux/version.h
+  CHK     include/generated/utsrelease.h
+  CALL    scripts/checksyscalls.sh
+  CHK     include/generated/compile.h
+  GZIP    kernel/config_data.gz
+  CHK     kernel/config_data.h
+  GZIP    arch/arm64/boot/Image.gz
+  Building modules, stage 2.
+  MODPOST 20 modules
+  CAT     arch/arm64/boot/Image.gz-dtb
