@@ -2979,7 +2979,11 @@ static int sd_media_scan_thread(void *__sdkp)
 			(sdkp->thread_remove && sdkp->async_end), 3*HZ);
 		if (sdkp->thread_remove && sdkp->async_end)
 			break;
+#ifdef CONFIG_MACH_LGE
+		ret = sd_check_events(sdkp->disk, 0);
+#else
 		ret = 0;
+#endif
 
 		if (sdkp->prv_media_present
 				!= sdkp->media_present) {
