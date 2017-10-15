@@ -18,7 +18,7 @@ fi
 
 echo "setting up build..."
 mkdir "$BUILD"
-make O="$BUILD" elsa_global_com-vanilla_defconfig
+make O="$BUILD" elsa_global_h990_defconfig
 
 echo "building kernel..."
 time make O="$BUILD" -j$NPR 2>&1 |tee ../compile.log
