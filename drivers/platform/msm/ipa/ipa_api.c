@@ -20,8 +20,6 @@
 #include <linux/platform_device.h>
 #include "ipa_api.h"
 
-#include "dirtysanta_fixup.h"
-
 #define DRV_NAME "ipa"
 
 #define IPA_API_DISPATCH_RETURN(api, p...) \
@@ -2411,8 +2409,6 @@ static struct of_device_id ipa_plat_drv_match[] = {
 static int ipa_generic_plat_drv_probe(struct platform_device *pdev_p)
 {
 	int result;
-
-	DIRTYSANTA_FIXUP_MSM_MODEM();
 
 	/*
 	* IPA probe function can be called for multiple times as the same probe
