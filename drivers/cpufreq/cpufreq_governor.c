@@ -298,7 +298,7 @@ int cpufreq_governor_dbs(struct cpufreq_policy *policy,
 		dbs_data->usage_count = 1;
 		if (cdata->governor == GOV_ZZMOOVE) {
 			rc = cdata->init_zz(dbs_data, policy);
-		} else if (cdata->governor == GOV_ELEMENTALX)
+		} else if (cdata->governor == GOV_ELEMENTALX) {
 			rc = cdata->init_ex(dbs_data, policy);
 		} else
 			rc = cdata->init(dbs_data, policy);
