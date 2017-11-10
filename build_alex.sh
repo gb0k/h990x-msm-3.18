@@ -6,7 +6,7 @@ export CROSS_COMPILE=/home/alex/matthewdalex-aarch64-linux-android-7.x-7abde5972
 DIR=$(pwd)
 BUILD="$DIR/build"
 OUT="$DIR/zip"
-ZIPNAME="DirtySanta-h990-1.3-u721-v10g.zip"
+ZIPNAME="DOTS_H990_kernel-leicxan_jahlex-v1.0.zip"
 NPR=`expr $(nproc) + 1`
 
 echo "cleaning build..."

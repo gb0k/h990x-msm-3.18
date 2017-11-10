@@ -3,7 +3,7 @@
 
 ## AnyKernel setup
 # begin properties
-kernel.string=H990DS-vanilla by emdroidle @ xda-developers
+kernel.string=H990 DOTS kernel by leicxan and jahlex @ xda-developers
 do.devicecheck=1
 do.modules=1
 do.cleanup=1
