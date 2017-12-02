@@ -1422,7 +1422,6 @@ static int xc2028_set_config(struct dvb_frontend *fe, void *priv_cfg)
 
 		if (!priv->fname) {
 			rc = -ENOMEM;
-			goto unlock;
 		}
 
 		rc = request_firmware_nowait(THIS_MODULE, 1,
