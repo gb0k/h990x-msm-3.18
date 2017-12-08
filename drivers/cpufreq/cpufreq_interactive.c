@@ -828,7 +828,6 @@ rearm:
 		cpufreq_interactive_timer_resched(data, false);
 
 #if defined(CONFIG_MSM_PERFORMANCE) || defined(CONFIG_SCHED_CORE_CTL)
-
 	/*
 	 * Send govinfo notification.
 	 * Govinfo notification could potentially wake up another thread
