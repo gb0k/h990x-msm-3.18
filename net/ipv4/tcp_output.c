@@ -1390,7 +1390,7 @@ static int __pskb_trim_head(struct sk_buff *skb, int len)
 		__skb_pull(skb, eat);
 		len -= eat;
 		if (!len)
-			return 0;
+			return;
 	}
 	eat = len;
 	k = 0;
