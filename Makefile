@@ -387,8 +387,25 @@ GEN_OPT_FLAGS := $(call cc-option,$(ARM_ARCH_OPT),-march=armv8-a) \
  -g0 \
  -DNDEBUG \
  -fomit-frame-pointer \
- -fmodulo-sched-allow-regmoves \
- -fivopts
+ -fivopts \
+ -Wno-maybe-uninitialized \
+ -Wno-incompatible-pointer-types \
+ -Wno-format-security \
+ -Wno-discarded-array-qualifiers \
+ -Wno-memset-transposed-args \
+ -Wno-bool-compare \
+ -Wno-logical-not-parentheses \
+ -Wno-switch-bool \
+ -Wno-array-bounds \
+ -Wno-misleading-indentation \
+ -Wno-format-truncation \
+ -Wno-bool-operation \
+ -Wno-duplicate-decl-specifier \
+ -Wno-memset-elt-size \
+ -Wno-parentheses \
+ -Wno-format-overflow \
+ -Wno-int-in-bool-context \
+ -Wno-switch-unreachable
 
 # flags to fix module loading issues if incompatible general optimizations are used
 MOD_FIX_FLAGS := -fno-tree-loop-vectorize
@@ -412,16 +429,13 @@ LINUXINCLUDE    := \
 
 KBUILD_CPPFLAGS := -D__KERNEL__
 
-KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -Wno-misleading-indentation \
-		   -fno-strict-aliasing -fno-common -Wno-incompatible-pointer-types \
-		   -Werror-implicit-function-declaration -Wno-unused-const-variable \
-		   -Wno-array-bounds -Wno-maybe-uninitialized \
-		   -Wno-format-security -Wno-discarded-array-qualifiers -Wno-memset-transposed-args \
-		   -Wno-bool-compare -Wno-logical-not-parentheses -Wno-switch-bool -Wno-tautological-compare \
-		   -std=gnu89 -std=gnu89 -Wno-format-truncation -Wno-bool-operation -Wno-duplicate-decl-specifier \
-		   -Wno-memset-elt-size -Wno-parentheses -Wno-format-overflow -Wno-int-in-bool-context \
-		   -Wno-switch-unreachable -Wno-stringop-overflow \
-		   $(GEN_OPT_FLAGS)
+KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
+		   -fno-strict-aliasing -fno-common \
+		   -Werror-implicit-function-declaration \
+		   -Wno-format-security \
+		   -std=gnu89 \
+		    $(GEN_OPT_FLAGS)
+
 KBUILD_AFLAGS_KERNEL := $(GEN_OPT_FLAGS)
 KBUILD_CFLAGS_KERNEL := $(GEN_OPT_FLAGS)
 KBUILD_AFLAGS   := -D__ASSEMBLY__
