@@ -96,6 +96,7 @@ if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.modules)" == 1 ]; then
   ui_print " ";
   ui_print "Pushing modules...";
   mount -o rw,remount,discard -t ext4 /system;
+  rm $root/system/lib/modules/*.ko;
   cp /tmp/anykernel/modules/*.ko $root/system/lib/modules;
   chown root:root $root/system/lib/modules/*.ko;
   setfiles /tmp/anykernel/setfiles.conf /system/lib/modules/;
